@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Meeting Dashboard{% endblock %}
+{% block content %}
+    <style>
+        #nama_topik {
+            font-weight: bold;
+        }
+
+        #tabel_header {
+            font-size: 13px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+    </style>
+    <h4 class="text-center">Meeting Dashboard</h4>
+    <div class="container-fluid">
+        <h5 class="border border-primary text-center rounded">
+            Hari/Tanggal : <b>{{ meeting.meeting_date|date:"l, d F Y" }}</b> | Time
+            : <b>{{ meeting.start_time|time:"G:i A" }}</b> |
+            Forum : <b>{{ meeting.meeting2forum.nama_forum }}</b> | Location
+            : <b>{{ meeting.location }}</b> |
+            Notulen : <b>{{ meeting.notulen }}</b>
+        </h5>
+    </div>
+    <br>
+    <div class="row container-fluid">
+        <div class="col">
+            <h4 class="text-center">Peserta Meeting</h4>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>BOD</th>
+                    <th>
+                        {% if hs == 1 %}
+                            <a class="btn btn-sm btn-primary btn-sm" href="{% url 'pica:add_peserta' meeting.pk %}">Add
+                                Peserta</a>
+                        {% endif %}
+                    </th>
+                </tr>
+                </thead>
+                {% for pest in peserta %}
+                    <tr id="tabel_detail">
+                        <td id="peserta_name">{{ pest.nama }}</td>
+                        <td>{{ pest.email }}</td>
+                        {% if pest.bod %}
+                            <td>Ya</td>
+                        {% else %}
+                            <td>Tidak</td>
+                        {% endif %}
+                        <td>
+                            {% if hs == 1 %}
+                                <a class="btn btn-sm btn-danger btn-sm"
+                                   href="{% url 'pica:hapus_peserta' meeting.pk pest.pk %}">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>
+                        {% if hs == 1 %}
+                            <a class="btn btn-sm btn-warning btn-lg" href="{% url 'pica:create_meeting' %}">Back to
+                                Input
+                                Data Meeting</a>
+                        {% else %}
+                            <a class="btn btn-sm btn-warning btn-lg" href="{% url 'pica:history_meeting' %}">Back to
+                                History Meeting</a>
+                        {% endif %}
+                    </td>
+                    {% if topik %}
+                        <td><a class="btn btn-sm btn-primary btn-lg" href="{% url 'pica:meet_render_pdf' meeting.pk %}"
+                               target="_blank">Preview Minutes of
+                            Meeting</a></td>
+                        <td>
+                            {% if hs == 1 %}
+                                <a class="btn btn-sm btn-secondary btn-lg"
+                                   href="{% url 'pica:meet_signature_pdf' meeting.pk %}"
+                                   target="_blank">Signature</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if hs == 1 %}
+                                <a class="btn btn-sm btn-success btn-lg"
+                                   href="{% url 'pica:send_meet_render_pdf' meeting.pk %}"
+                                   target="_blank">Send MoM via
+                                    email</a>
+                            {% endif %}
+                        </td>
+                    {% else %}
+                        <td></td>
+                        <td></td>
+                    {% endif %}
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="col">
+            <h4 class="text-center">Topik</h4>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>Topik</th>
+                    <th>Problem Owner</th>
+                    <th>Div/Dept (Function)</th>
+                    <th>Due Date</th>
+                    <th>PIC</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th>
+                        {% if hs == 1 %}
+                            <a class="btn btn-sm btn-success btn-lg" href="{% url 'pica:create_pica' meeting.pk %}">Add
+                                Topik</a>
+                        {% endif %}
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for top in topik %}
+                    <tr id="tabel_detail">
+                        <td id="nama_topik"><a
+                                href="{% url 'pica:update_pica_action' top.pk meeting.pk %}">{{ top.nama_topik }}</a>
+                        </td>
+                        <td>{{ top.topik2company.name }}</td>
+                        <td>{{ top.topik2divdept.name }}</td>
+                        <td>{{ top.due_date|date:"l, d M Y" }}</td>
+                        <td>
+                            {% for tp in top.topik2peserta.all %}
+                                {{ tp.nama }},
+                            {% endfor %}
+                        </td>
+                        <td>{{ top.status }}</td>
+                        <td>
+                            {% if hs == 1 %}
+                                <a class="btn btn-sm btn-primary btn-sm"
+                                   href="{% url 'pica:update_pica' top.pk meeting.pk %}">Edit</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if hs == 1 %}
+                                <a class="btn btn-sm btn-secondary btn-sm"
+                                   href="{% url 'pica:add_pic' top.pk meeting.pk %}">PIC</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if hs == 1 %}
+                                <a class="btn btn-sm btn-danger btn-sm"
+                                   href="{% url 'pica:delete_topik' meeting.pk top.pk %}">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+{% endblock %}

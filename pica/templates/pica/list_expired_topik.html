@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}List Open Topik{% endblock %}
+{% block content %}
+    <br>
+    <style>
+        #tabel_header {
+            font-size: 14px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+
+        #nama_departemen {
+            font-weight: bold;
+        }
+
+        h4 {
+            color: darkblue;
+        }
+    </style>
+    <div class="row container-fluid">
+        <div class="col-lg">
+            <h4>List Expired Topik</h4>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>Nama Topik</th>
+                    <th>Problem</th>
+                    <th>Action</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Expired</th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for topik in topik_expired %}
+                    <tr id="tabel_detail">
+                        <td id="nama_departemen">{{ topik.nama_topik }}</td>
+                        <td>{{ topik.problem|safe }}</td>
+                        <td>{{ topik.action|safe }}</td>
+                        <td>{{ topik.due_date|date:"d M Y" }}</td>
+                        <td>{{ topik.status }}</td>
+                        <td>Expired</td>
+                        <td><a class="btn btn-sm btn-primary btn-sm"
+                               href="{% url 'pica:list_activity' topik.pk 1 %}">Activity</a></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td><a class="btn btn-sm btn-primary btn-sm"
+                           href="{% url 'accounts:home' %}">Back to Homepage</a></td>
+                    <td><a class="btn btn-sm btn-danger btn-sm"
+                           href="{% url 'pica:notify_all' %}">Notify All</a></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+{% endblock %}

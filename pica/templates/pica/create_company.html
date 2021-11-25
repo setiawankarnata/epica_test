@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Create Company{% endblock %}
+{% block content %}
+    <br>
+    <style>
+        #tabel_header {
+            font-size: 14px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+
+        #nama_company {
+            font-weight: bold;
+        }
+
+        h4 {
+            color: darkblue;
+        }
+    </style>
+    <div class="row container-fluid">
+        <div class="col">
+            <br>
+            <h4>Create Company</h4>
+            <hr>
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit">Create</button>
+                <a href="{% url 'accounts:home' %}">
+                    <button class="btn btn-danger" type="button">Exit</button>
+                </a>
+            </form>
+        </div>
+        <div class="col border border-secondary rounded">
+            <h4>List of Company</h4>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>Company Code</th>
+                    <th>Company Name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for company in companies %}
+                    <tr id="tabel_detail">
+                        <td id="nama_company">{{ company.name }}</td>
+                        <td>{{ company.description }}</td>
+                        <td><a class="btn btn-sm btn-primary btn-sm"
+                               href="{% url 'pica:update_company'  company.id %}">Edit</a></td>
+                        <td><a class="btn btn-sm btn-danger btn-sm"
+                               href="{% url 'pica:delete_company'  company.id %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+{% endblock %}

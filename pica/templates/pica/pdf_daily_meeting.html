@@ -1,0 +1,57 @@
+{% extends 'base_pdf.html' %}
+{% load static %}
+{% block title %}Meeting Summary{% endblock %}
+{% block content %}
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 2cm;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 2px;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+    <div class="container">
+        <h1 class="text-center">Meeting Summary</h1>
+        <p>Forum : <b>{{ meet.meeting2forum.nama_forum }}</b> |
+            Date : <b>{{ meet.meeting_date|date:"l, d M Y" }}</b> | Time : <b>{{ meet.start_time|time:"H:i" }}</b> |
+            Notulen : <b>{{ meet.notulen }} </b></p>
+        <p>Peserta :
+            {% for pes in all_peserta %}
+                {{ pes.nama }},
+            {% endfor %}
+        </p>
+
+        <table style="width:100%">
+            <tr>
+                <th>Function</th>
+                <th>Problem Owner</th>
+                <th>Topik</th>
+                <th>Problem/Information</th>
+                <th>Action</th>
+                <th>Due Date</th>
+                <th>PIC</th>
+            </tr>
+            {% for top in topik %}
+                <tr>
+                    <td>{{ top.topik2divdept.name }}</td>
+                    <td>{{ top.topik2company.name }}</td>
+                    <td>{{ top.nama_topik }}</td>
+                    <td>{{ top.problem|safe }}</td>
+                    <td>{{ top.action|safe }}</td>
+                    <td>{{ top.due_date|date:"l, d M Y" }}</td>
+                    <td>
+                        {% for pic in top.topik2peserta.all %}
+                            <b>{{ pic.nama }},</b>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

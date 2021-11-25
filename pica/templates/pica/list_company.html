@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="col-lg-6 offset-lg-3">
+        <h3>List Company</h3>
+        <br>
+        <table class="table table-lg">
+            <tr>
+                <th>Company Code</th>
+                <th>Company Name</th>
+            </tr>
+            {% for com in object_list %}
+                <tr>
+                    <td>{{ com.code }}</td>
+                    <td>{{ com.name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <a href="{% url 'pica:create-company' %}">
+            <button class="btn btn-primary" type="button">Back</button>
+        </a>
+    </div>
+{% endblock %}

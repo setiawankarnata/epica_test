@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Logout{% endblock %}
+{% block content %}
+    <div class="container col-lg-4 offset-lg-4 text-center">
+        <br>
+        <img src="{% static 'images/ePicaLogo.png' %}" alt="epica logo">
+        <br><br>
+        <h3>Thank you for using ePica application</h3>
+        <br>
+        <p>Please <a href="{% url 'accounts:login' %}">login</a> again to use the ePica application.</p>
+    </div>
+{% endblock %}

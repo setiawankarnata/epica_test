@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile Page{% endblock %}
+{% block content %}
+    <br><br>
+    <div class="container col-lg-4 offset-lg-4 border border-dark rounded text-center">
+        <br>
+        <h5>Profile Page {{ user.first_name }} {{ user.last_name }}</h5>
+        {% if user.user2profile %}
+            {{ profile.birth_date }}
+        {% else %}
+            <p>Profile anda belum ada. Silakan lengkapi <a href="{% url 'profile_create' user.id %}">profile anda.</a>
+            </p>
+        {% endif %}
+        <br>
+    </div>
+{% endblock %}

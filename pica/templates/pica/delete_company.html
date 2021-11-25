@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Delete Company{% endblock %}
+{% block content %}
+    <br><br>
+    <div class="col-lg-4 offset-lg-4">
+        <h4>Delete Company</h4>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure want to delete this data?</p>
+            <br>
+            <p>Name : {{ company.name }}</p>
+            <p>Description : {{ company.description }}</p>
+            <br><br>
+            <p>
+                <button class="btn btn-danger" type="submit">Delete</button>
+                <a href="{% url 'pica:create_company' %}">
+                    <button class="btn btn-primary" type="button">Cancel</button>
+                </a></p>
+        </form>
+    </div>
+{% endblock %}

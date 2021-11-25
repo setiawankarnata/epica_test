@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Update Activity{% endblock %}
+{% block content %}
+    <br>
+    <div class="col-lg-6 offset-lg-3">
+        <h3>Update Activity</h3>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <a href="{% url 'pica:create_activity' topik.pk %}">
+                <button class="btn btn-danger" type="submit">Cancel</button>
+            </a>
+        </form>
+    </div>
+    <br>
+{% endblock %}

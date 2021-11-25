@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Add Topik{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <br>
+        <h3>Add Topik</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="nama_karyawan"></label>
+                        <input type="text" class="form-control" name="nama_karyawan"
+                               placeholder="Masukkan nama karyawan" id="nama_karyawan">
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="form-group">
+                        <label for="search_nama"></label>
+                        <button type="submit" class="btn btn-primary form-control" id="search_nama">Search</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-lg table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Due Date</th>
+                        <th>Div/Dept/Function</th>
+                        <th>Problem Owner</th>
+                        <th>Status</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    {% for tpk in sisa_topik %}
+                        <tr>
+                            <td>{{ tpk.nama_topik }}</td>
+                            <td>{{ tpk.due_date }}</td>
+                            <td>{{ tpk.topik2departemen.name }}</td>
+                            <td>{{ tpk.topik2company.name }}</td>
+                            <td>{{ tpk.status }}</td>
+                            <td><a class="btn btn-sm btn-success"
+                                   href="{% url 'pica:masukkan_topik' meet.pk tpk.pk %}">Add</a></td>
+                            <td><a class="btn btn-sm btn-danger"
+                                   href="{% url 'pica:delete_topik' meet.pk tpk.pk %}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <br>
+        <a href="{% url 'pica:create_pica' meet.pk %}" class="btn btn-primary mx-2">Create New Topik</a>
+        <a href="{% url 'pica:meeting_dashboard' meet.pk %}" class="btn btn-warning mx-2">Back to Dashboard
+            Meeting</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Update PICA Action{% endblock %}
+{% block content %}
+    <br>
+    <style>
+        #tabel_header {
+            font-size: 13px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+    </style>
+    <div class="row container-fluid">
+        <div class="col">
+            <h3>Update PICA Action</h3>
+            <br>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <a href="{% url 'pica:meeting_dashboard' meet.pk %}">
+                    <button class="btn btn-danger" type="submit">Cancel</button>
+                </a>
+            </form>
+        </div>
+        <div class="col border border-secondary rounded">
+            <h5>Activity</h5>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>Tanggal</th>
+                    <th>User</th>
+                    <th>Keterangan</th>
+                    <th>Due Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for act in all_activity %}
+                    <tr id="tabel_detail">
+                        <td>{{ act.date_activity|date:"d M Y" }}</td>
+                        <td>{{ act.activity2user.first_name }}</td>
+                        <td>{{ act.keterangan }}</td>
+                        <td>{{ act.due_date|date:"d M Y" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br>
+    </div>
+{% endblock %}

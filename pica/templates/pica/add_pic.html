@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Add Person In Charge{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <br>
+        <h3>Add Person In Charge</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="nama_pic"></label>
+                        <input type="text" class="form-control" name="nama_pic"
+                               placeholder="Masukkan nama PIC" id="nama_pic">
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="form-group">
+                        <label for="search_nama"></label>
+                        <button type="submit" class="btn btn-primary form-control" id="search_nama">Search</button>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="form-group">
+                        <label for="exit"></label>
+                        <a class="btn btn-warning form-control" id="exit"
+                                {#                           href="{% url 'pica:create_pica' meet %}"><b>Exit</b></a>#}
+                           href="{% url 'pica:meeting_dashboard' meet 1%}"><b>Exit</b></a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br>
+    </div>
+    <div class="row container-fluid">
+        <div class="col">
+            <h6>Pilih PIC</h6>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>BOD</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for usr in sisa_user %}
+                    <tr>
+                        <td>{{ usr.nama }}</td>
+                        <td>{{ usr.email }}</td>
+                        {% if usr.bod %}
+                            <td>Yes</td>
+                        {% else %}
+                            <td>No</td>
+                        {% endif %}
+                        <td><a class="btn btn-sm btn-primary"
+                               href="{% url 'pica:masukkan_pic' topik.pk usr.pk meet 'Y' %}">PIC</a></td>
+                        <td><a class="btn btn-sm btn-secondary"
+                               href="{% url 'pica:masukkan_pic' topik.pk usr.pk meet 'N' %}">Known By</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col">
+            <h6>PIC (assigned)</h6>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Full Name</th>
+                    <th>email</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for usrt in user_topik %}
+                    <tr>
+                        <td>{{ usrt.nama }}</td>
+                        <td>{{ usrt.email }}</td>
+                        {% if usrt.email in email_list %}
+                            <td>PIC</td>
+                        {% else %}
+                            <td>Known By</td>
+                        {% endif %}
+                        <td><a class="btn btn-sm btn-danger"
+                               href="{% url 'pica:hapus_pic' topik.pk usrt.pk meet %}">Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Delete Peserta{% endblock %}
+{% block content %}
+    <br><br>
+    <div class="col-lg-4 offset-lg-4">
+        <h4>Delete Peserta</h4>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure want to delete this data?</p>
+            <br>
+            <p>Name : {{ peserta.nama }}</p>
+            <p>Email : {{ peserta.email }}</p>
+            <p>Status BOD : {{ peserta.bod }}</p>
+            <br><br>
+            <p>
+                <button class="btn btn-danger" type="submit">Delete</button>
+                <a href="{% url 'pica:create_peserta' %}">
+                    <button class="btn btn-primary" type="button">Cancel</button>
+                </a></p>
+        </form>
+    </div>
+{% endblock %}

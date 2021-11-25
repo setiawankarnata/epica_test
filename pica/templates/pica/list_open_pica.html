@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <br>
+    <div class="row container-fluid">
+        <div class="col-lg">
+            <h5>List Open PICA</h5>
+            <br>
+            <form action="" method="post" id="meeting_form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-primary" type="submit" value="Submit">
+{#                <a class="btn btn-danger" href="{% url 'accounts:home' %}" role="button">Cancel</a>#}
+                <br>
+            </form>
+            <br>
+        </div>
+        <table class="table table-lg table-striped">
+            <thead class="thead-dark">
+            <tr id="tabel_header">
+                <th>Topik</th>
+                <th>Problem</th>
+                <th>Action</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Expired</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for topik in topiks %}
+                <tr id="tabel_detail">
+                    <td id="nama_departemen">{{ topik.nama_topik }}</td>
+                    <td>{{ topik.problem|safe }}</td>
+                    <td>{{ topik.action|safe }}</td>
+                    <td>{{ topik.due_date|date:"d M Y" }}</td>
+                    <td>{{ topik.status }}</td>
+                    {% if topik.expired %}
+                        <td>Yes</td>
+                    {% else %}
+                        <td>No</td>
+                    {% endif %}
+                    <td><a class="btn btn-sm btn-primary btn-sm"
+                           href="{% url 'pica:list_activity' topik.pk 4 %}">Activity</a></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td><a class="btn btn-sm btn-primary btn-sm"
+                       href="{% url 'accounts:home' %}">Back to Homepage</a></td>
+                <td><a class="btn btn-sm btn-danger btn-sm"
+                       href="{% url 'pica:notify_all' %}">Notify All</a></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <br>
+    </div>
+{% endblock %}

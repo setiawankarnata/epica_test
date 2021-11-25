@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Daftar Peserta{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <h3>Daftar Peserta</h3>
+        <br>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="nama_peserta"></label>
+                        <input type="text" class="form-control" name="nama_peserta"
+                               placeholder="Masukkan nama peserta" id="nama_peserta">
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="form-group">
+                        <label for="search_nama"></label>
+                        <button type="submit" class="btn btn-primary form-control" id="search_nama">Search</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-body">
+                    <table class="table table-lg">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Company</th>
+                            <th>Status BOD</th>
+                            <th></th>
+                        </tr>
+                        {% for pes in peserta %}
+                            <tr>
+                                <td>{{ pes.nama }}</td>
+                                <td>{{ pes.email }}</td>
+                                <td>{{ pes.peserta2company.name }}</td>
+                                {% if pes.bod %}
+                                    <td>Yes</td>
+                                {% else %}
+                                    <td>No</td>
+                                {% endif %}
+                                {% if pes in meet.meeting2peserta.all %}
+                                    <td><a class="btn btn-sm btn-danger"
+                                           href="{% url 'action_peserta2meeting' pes.id meet.id 'R' %}">Remove</a></td>
+                                {% else %}
+                                    <td><a class="btn btn-sm btn-success"
+                                           href="{% url 'action_peserta2meeting' pes.id meet.id 'A' %}">Add</a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <a href="{% url 'dashboard_meeting' %}" class="btn btn-primary">Back to Dashboard Meeting</a>
+    </div>
+{% endblock %}

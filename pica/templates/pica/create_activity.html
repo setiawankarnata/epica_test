@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% block title %}Create Activity{% endblock %}
+{% block content %}
+    <br>
+    <style>
+        #tabel_header {
+            font-size: 14px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+
+        #nama_departemen {
+            font-weight: bold;
+        }
+
+        h4 {
+            color: darkblue;
+        }
+    </style>
+    <div class="row container-fluid">
+        <div class="col">
+            <h4>Create Activity</h4>
+            <hr>
+            <h6>Problem : {{ topik.problem|safe }}</h6>
+            <h6>Action : {{ topik.action|safe }}</h6>
+            <h6>Due date : {{ topik.due_date|date:"l, d F Y" }}</h6>
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit">Create</button>
+                <a href="{% url 'pica:list_pica' user.id %}">
+                    <button class="btn btn-danger" type="button">Cancel</button>
+                </a>
+            </form>
+        </div>
+        <div class="col border border-secondary rounded">
+            <h4>List of Activity</h4>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>PIC</th>
+                    <th>Date</th>
+                    <th>Activity/Action</th>
+                    <th>New Due Date</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for act in acts %}
+                    <tr id="tabel_detail">
+                        <td id="nama_departemen">{{ act.activity2user.first_name }}</td>
+                        <td>{{ act.date_activity }}</td>
+                        <td>{{ act.keterangan }}</td>
+                        <td>{{ act.due_date }}</td>
+                        <td>{{ act.status }}</td>
+                        {% if act.activity2user.id == user.id %}
+                            {% now "Y-m-d" as todays_date %}
+                            {% if act.date_activity|date:"Y-m-d" == todays_date %}
+                                <td><a class="btn btn-sm btn-primary btn-sm"
+                                       href="{% url 'pica:update_activity' act.pk %}">Edit</a></td>
+                                <td><a class="btn btn-sm btn-danger btn-sm"
+                                       href="{% url 'pica:delete_activity' act.pk %}">Delete</a></td>
+                            {% endif %}
+                        {% else %}
+                            <td></td>
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+{% endblock %}

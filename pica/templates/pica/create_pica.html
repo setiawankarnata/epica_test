@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create PICA{% endblock %}
+{% block content %}
+    <br>
+    <style>
+        #tabel_header {
+            font-size: 13px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+
+        #nama_topik {
+            font-weight: bold;
+        }
+
+        h4 {
+            color: darkblue;
+        }
+    </style>
+    <div class="row container-fluid">
+        <div class="col">
+            <a href="{% url 'pica:meeting_dashboard' meet %}" class="btn btn-warning">Back to Dashboard
+                Meeting</a>
+            <br><br>
+            <h5>Create PICA</h5>
+            <hr>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}
+                <input class="btn btn-primary" type="submit" value="Submit">
+                <a class="btn btn-danger" href="{% url 'pica:meeting_dashboard' meet %}">Cancel</a>
+            </form>
+        </div>
+        <div class="col border border-secondary rounded">
+            <br>
+            <h5>List Topik</h5>
+            <br>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>Topik</th>
+                    <th>Problem/Information</th>
+                    <th>Action</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for topik in topiks %}
+                    {% if topik.topik2meeting %}
+                    {% else %}
+                        <tr id="tabel_detail">
+                            <td id="nama_topik">{{ topik.nama_topik }}</td>
+                            <td>{{ topik.problem | safe }}</td>
+                            <td>{{ topik.action | safe}}</td>
+                            <td>{{ topik.due_date }}</td>
+                            <td>{{ topik.status }}</td>
+                            <td><a class="btn btn-sm btn-info btn-sm" href="{% url 'pica:update_pica' topik.pk meet %}">Edit</a>
+                            </td>
+                            <td><a class="btn btn-sm btn-primary btn-sm"
+                                   href="{% url 'pica:masukkan_topik' meet topik.pk %}">Add</a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+{% endblock %}

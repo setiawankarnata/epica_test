@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Delete Topik{% endblock %}
+{% block content %}
+    <br><br>
+    <div class="col-lg-4 offset-lg-4">
+        <h4>Delete Topik</h4>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure want to delete this data?</p>
+            <br>
+            <p>Nama Topik : {{ topik.nama_topik }}</p>
+            <p>Problem : {{ topik.problem | safe }}</p>
+            <p>Due Date : {{ topik.due_date }}</p>
+            <br><br>
+            <p>
+                <button class="btn btn-danger" type="submit">Delete</button>
+                <a href="{% url 'pica:meeting_dashboard' meet %}">
+                    <button class="btn btn-primary" type="button">Cancel</button>
+                </a></p>
+        </form>
+    </div>
+{% endblock %}

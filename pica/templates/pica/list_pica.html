@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}List PICA{% endblock %}
+{% block content %}
+    <br>
+    <style>
+        #tabel_header {
+            font-size: 14px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+
+        #due_date {
+            font-weight: bold;
+        }
+
+        h4 {
+            color: darkblue;
+        }
+    </style>
+    <div class="row container-fluid">
+        <div class="col">
+            <h4 class="text-center">List PICA</h4>
+            <a href="{% url 'accounts:home' %}" class="btn btn-primary">Back to Home</a>
+            <br>
+            <br>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>Topik</th>
+                    <th>Problem</th>
+                    <th>Action</th>
+                    <th>Div/Dept.</th>
+                    <th>Company</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for topik in topiks %}
+                    <tr id="tabel_detail">
+                        <td>{{ topik.nama_topik }}</td>
+                        <td>{{ topik.problem|safe }}</td>
+                        <td>{{ topik.action|safe }}</td>
+                        <td>{{ topik.topik2divdept.name }}</td>
+                        <td>{{ topik.topik2company.name }}</td>
+                        <td id="due_date">{{ topik.due_date }}</td>
+                        <td>{{ topik.status }}</td>
+                        <td><a class="btn btn-sm btn-primary btn-sm"
+                               href="{% url 'pica:create_activity' topik.pk %}">Activity</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+{% endblock %}

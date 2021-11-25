@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Profile{% endblock %}
+{% block content %}
+    <style>
+        .profile-pic {
+            max-width: 150px;
+            max-height: 150px;
+            margin: 0 auto;
+            border-radius: 50%;
+        }
+    </style>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 offset-lg-3">
+                <div class="card card-body">
+                    <a class="btn btn-warning" href="{% url 'accounts:home' %}">&#8592; Back to HomePage</a>
+                    <hr>
+                    <h4>{{ request.user.first_name }} {{ request.user.last_name }}</h4>
+                    {% if user.user2profile %}
+                        <img class="profile-pic" src="{{ user.user2profile.photo.url }}" alt="Photo User">
+                    {% else %}
+                        <img class="profile-pic" src="{% static 'accounts/images/User1.svg' %}" alt="Photo User">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-body">
+                    <h3>Create profile</h3>
+                    <hr>
+                    <form action="{% url 'accounts:profile_create' user.pk %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input class="btn btn-primary" type="submit" name="Create Profile">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

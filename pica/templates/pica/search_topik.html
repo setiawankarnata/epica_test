@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Search Topik {% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <br>
+                <h5>Search PICA</h5>
+                <br>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ forms.as_p }}
+                    <div class="form-group">
+                        <label for="search_topik"></label>
+                        <button type="submit" class="btn btn-primary form-control" id="search_topik">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4 border border-success rounded mt-3 mr-auto" style="border-width:4px !important">
+                <h5>Parameter Search</h5>
+                <h6>Search data PICA akan dilakukan berdasarkan kategory yang ada yaitu :</h6>
+                <ul>
+                    <li>Nama Topik</li>
+                    <li>Problem</li>
+                    <li>Action</li>
+                    <li>Meeting Forum</li>
+                    <li>Status</li>
+                    <li>Function</li>
+                    <li>Company</li>
+                    <li>PIC</li>
+                </ul>
+                <p>Silakan isi kata yang ingin dicari pada kolom <b>query</b> (huruf besar/kecil tidak berpengaruh).</p>
+                <p>Tanggal PICA akan berada pada range <b>Start periode</b> dan <b>End periode</b>.</p>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-lg table-striped" style="font-size: 12px">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Issue Date</th>
+                        <th>Meeting Forum</th>
+                        <th>Function</th>
+                        <th>Company</th>
+                        <th>Topik</th>
+                        <th>Problem</th>
+                        <th>Action</th>
+                        <th>Due Date</th>
+                        <th>PIC</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    {% for topik in topiks %}
+                        <tr>
+                            <td>{{ topik.topik2meeting.meeting_date|date:'d F Y' }}</td>
+                            <td>{{ topik.topik2meeting.meeting2forum.nama_forum }}</td>
+                            <td>{{ topik.topik2departemen.name }}</td>
+                            <td>{{ topik.topik2company }}</td>
+                            <td>{{ topik.nama_topik }}</td>
+                            <td>{{ topik.problem|safe }}</td>
+                            <td>{{ topik.action|safe }}</td>
+                            <td>{{ topik.due_date|date:'d F Y' }}</td>
+                            <td>
+                                {% for k,v in person.items %}
+                                    {% if k == topik.id %}
+                                        {% for j in v %}
+                                            {{ j }},
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>{{ topik.status }}</td>
+                            <td><a class="btn btn-sm btn-primary btn-sm"
+                                   href="{% url 'pica:list_activity' topik.pk 2 %}">Activity</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <br>
+    </div>
+{% endblock %}

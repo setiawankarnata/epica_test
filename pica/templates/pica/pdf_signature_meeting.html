@@ -1,0 +1,43 @@
+{% extends 'base_pdf.html' %}
+{% load static %}
+{% block title %}Meeting Summary{% endblock %}
+{% block content %}
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        h1#mom {
+            text-align: center;
+            border: 2px solid black;
+            padding: 2px;
+        }
+
+        h1#lembar {
+            text-align: center;
+        }
+
+        .tab1 {
+            font-size: larger;
+            font-weight: bold;
+        }
+    </style>
+    <div class="container">
+        <h1 id="mom" class="text-center">Minute of Meeting | Forum : {{ meet.meeting2forum.nama_forum }} | Date :
+            {{ meet.meeting_date|date:"l, d M Y" }}
+        </h1>
+        <h1 class="text-center" id="lembar">LEMBAR PENGESAHAN
+        </h1>
+    </div>
+    <br><br><br>
+    <div class="container">
+        <p class="tab1">
+            {% for sign in signs %}
+                {{ sign.nama_bod }} ({{ sign.title }}) : {{ sign.lines }}
+                <br><br><br><br>
+            {% endfor %}
+        </p>
+    </div>
+
+{% endblock %}

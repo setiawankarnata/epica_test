@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Create Peserta{% endblock %}
+{% block content %}
+    <br>
+    <style>
+        #tabel_header {
+            font-size: 14px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+
+        #nama_peserta {
+            font-weight: bold;
+        }
+
+        h4 {
+            color: darkblue;
+        }
+    </style>
+    <div class="row container-fluid">
+        <div class="col">
+            <h4>Create Peserta</h4>
+            <hr>
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit">Create</button>
+                <a href="{% url 'accounts:home' %}">
+                    <button class="btn btn-danger" type="button">Exit</button>
+                </a>
+            </form>
+        </div>
+        <div class="col border border-secondary rounded">
+            <h4>List Peserta</h4>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>BOD</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for pes in peserta %}
+                    <tr id="tabel_detail">
+                        <td id="nama_peserta">{{ pes.nama }}</td>
+                        <td>{{ pes.email }}</td>
+                        {% if pes.bod %}
+                            <td>Yes</td>
+                        {% else %}
+                            <td>No</td>
+                        {% endif %}
+                        <td><a class="btn btn-sm btn-primary btn-sm"
+                               href="{% url 'pica:update_peserta'  pes.id %}">Edit</a></td>
+                        <td><a class="btn btn-sm btn-danger btn-sm"
+                               href="{% url 'pica:delete_peserta'  pes.id %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+{% endblock %}

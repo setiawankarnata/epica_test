@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Create Forum{% endblock %}
+{% block content %}
+    <style>
+        #tabel_header {
+            font-size: 14px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+
+        #nama_forum {
+            font-weight: bold;
+        }
+
+        h4 {
+            color: darkblue;
+        }
+    </style>
+    <br>
+    <div class="row container-fluid">
+        <div class="col">
+            <h4>Create Forum</h4>
+            <br>
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <br>
+                <button class="btn btn-primary" type="submit">Create</button>
+                <a href="{% url 'accounts:home' %}">
+                    <button class="btn btn-danger" type="button">Exit</button>
+                </a>
+            </form>
+            <br>
+        </div>
+        <div class="col border border-secondary rounded">
+            <br>
+            <h4>List of Forum</h4>
+            <table class="table table-lg table-striped" id="tabel_header">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Nama Forum</th>
+                    <th>Keterangan</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for forum in forums %}
+                    <tr id="tabel_detail">
+                        <td id="nama_forum">{{ forum.nama_forum }}</td>
+                        <td>{{ forum.keterangan }}</td>
+                        <td><a class="btn btn-sm btn-primary btn-sm"
+                               href="{% url 'pica:update_forum'  forum.id %}">Edit</a></td>
+                        <td><a class="btn btn-sm btn-danger btn-sm"
+                               href="{% url 'pica:delete_forum'  forum.id %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+{% endblock %}

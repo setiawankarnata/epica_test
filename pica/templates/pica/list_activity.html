@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% block title %}Create Activity{% endblock %}
+{% block content %}
+    <br>
+    <style>
+        #tabel_header {
+            font-size: 14px;
+        }
+
+        #tabel_detail {
+            font-size: 12px;
+        }
+
+        #nama_departemen {
+            font-weight: bold;
+        }
+
+        h4 {
+            color: darkblue;
+        }
+    </style>
+    <div class="row container-fluid">
+        <div class="col-lg-8 offset-2">
+            <h4>List of Activity</h4>
+            <table class="table table-lg table-striped">
+                <thead class="thead-dark">
+                <tr id="tabel_header">
+                    <th>PIC</th>
+                    <th>Date</th>
+                    <th>Activity/Action</th>
+                    <th>New Due Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                {% for act in acts %}
+                    <tr id="tabel_detail">
+                        <td id="nama_departemen">{{ act.activity2user.first_name }}</td>
+                        <td>{{ act.date_activity }}</td>
+                        <td>{{ act.keterangan }}</td>
+                        <td>{{ act.due_date }}</td>
+                        <td>{{ act.status }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+            {% if ctr == 1 %}
+                <a href="{% url 'pica:topik_expired_check' %}">
+                    <button class="btn btn-danger" type="button">Back to List Expired Topik</button>
+                </a>
+            {% elif ctr == 2 %}
+                <a href="{% url 'pica:search_topik' %}">
+                    <button class="btn btn-danger" type="button">Back to Search</button>
+                </a>
+            {% elif ctr == 3 %}
+                <a href="{% url 'pica:search_all' %}">
+                    <button class="btn btn-danger" type="button">Back to Search All</button>
+                </a>
+            {% else %}
+                <a href="{% url 'pica:list_open_pica' %}">
+                    <button class="btn btn-danger" type="button">Back to List Open Pica</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+{% endblock %}

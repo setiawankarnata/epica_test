@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Delete Departemen{% endblock %}
+{% block content %}
+    <br><br>
+    <div class="col-lg-4 offset-lg-4">
+        <h4>Delete Divisi/Departemen</h4>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure want to delete this data?</p>
+            <br>
+            <p>Name : {{ dept.name }}</p>
+            <p>Description : {{ dept.description }}</p>
+            <br><br>
+            {#            {{ form.as_p }}#}
+            <p>
+                <button class="btn btn-danger" type="submit">Delete</button>
+                <a href="{% url 'pica:create_departemen' %}">
+                    <button class="btn btn-primary" type="button">Cancel</button>
+                </a></p>
+        </form>
+    </div>
+{% endblock %}
