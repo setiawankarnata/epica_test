@@ -22,7 +22,7 @@
     </style>
     <div class="row container-fluid">
         <div class="col">
-            <a href="{% url 'pica:meeting_dashboard' meet %}" class="btn btn-warning">Back to Dashboard
+            <a href="{% url 'pica:meeting_dashboard' meet 1 %}" class="btn btn-warning">Back to Dashboard
                 Meeting</a>
             <br><br>
             <h5>Create PICA</h5>
@@ -32,7 +32,7 @@
                 {{ form.media }}
                 {{ form.as_p }}
                 <input class="btn btn-primary" type="submit" value="Submit">
-                <a class="btn btn-danger" href="{% url 'pica:meeting_dashboard' meet %}">Cancel</a>
+                <a class="btn btn-danger" href="{% url 'pica:meeting_dashboard' meet 1 %}">Cancel</a>
             </form>
         </div>
         <div class="col border border-secondary rounded">
@@ -57,7 +57,7 @@
                         <tr id="tabel_detail">
                             <td id="nama_topik">{{ topik.nama_topik }}</td>
                             <td>{{ topik.problem | safe }}</td>
-                            <td>{{ topik.action | safe}}</td>
+                            <td>{{ topik.action | safe }}</td>
                             <td>{{ topik.due_date }}</td>
                             <td>{{ topik.status }}</td>
                             <td><a class="btn btn-sm btn-info btn-sm" href="{% url 'pica:update_pica' topik.pk meet %}">Edit</a>

@@ -3,14 +3,6 @@
 {% block title %}Update PICA{% endblock %}
 {% block content %}
     <br>
-    <style>
-        #tabel_header {
-            font-size: 13px;
-        }
-        #tabel_detail {
-            font-size: 12px;
-        }
-    </style>
     <div class="row container-fluid">
         <div class="col-lg-6 offset-3">
             <h3>Update PICA</h3>
@@ -21,7 +13,7 @@
                 {{ form.as_p }}
                 <button class="btn btn-primary mx-2" type="submit">Submit</button>
                 {% if topik.topik2peserta.all %}
-
+{#                    {% pass %}#}
                 {% else %}
                     <a href="{% url 'pica:delete_topik' meet topik.pk %}"
                        class="btn btn-danger mx-2">Delete</a>

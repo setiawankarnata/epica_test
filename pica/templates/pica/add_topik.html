@@ -55,7 +55,7 @@
         </div>
         <br>
         <a href="{% url 'pica:create_pica' meet.pk %}" class="btn btn-primary mx-2">Create New Topik</a>
-        <a href="{% url 'pica:meeting_dashboard' meet.pk %}" class="btn btn-warning mx-2">Back to Dashboard
+        <a href="{% url 'pica:meeting_dashboard' meet.pk 1 %}" class="btn btn-warning mx-2">Back to Dashboard
             Meeting</a>
     </div>
 {% endblock %}
