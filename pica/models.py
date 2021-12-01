@@ -25,7 +25,7 @@ class Peserta(models.Model):
     nama = models.CharField(max_length=50, verbose_name="Nama Peserta", null=True,
                             blank=True)
     email = models.EmailField(null=True, blank=True, verbose_name="Email address")
-    bod = models.BooleanField(default=False, verbose_name="Apakah masuk dalam list BOD?")
+    bod = models.BooleanField(default=False, verbose_name="Apakah masuk dalam list BOD?", null=True)
 
     def __str__(self):
         return self.nama
@@ -40,8 +40,8 @@ class Forum(models.Model):
 
 
 class Signature(models.Model):
-    title = models.CharField(max_length=20)
-    nama_bod = models.CharField(max_length=30)
+    title = models.CharField(max_length=20, null=True)
+    nama_bod = models.CharField(max_length=30, null=True)
     presdir = models.BooleanField(default=False, null=True)
     lines = models.CharField(max_length=60, null=True, blank=True)
     signature2forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="forum2signature", null=True,
@@ -87,15 +87,15 @@ class Topik(models.Model):
     nama_topik = models.CharField(max_length=100, null=True, blank=True, verbose_name="Topik")
     problem = RichTextUploadingField(blank=True, null=True, verbose_name="Problem/Information")
     action = RichTextUploadingField(blank=True, null=True, verbose_name="Action")
-    date_created = models.DateField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
+    date_created = models.DateField(auto_now_add=True, null=True)
+    date_updated = models.DateTimeField(auto_now=True, null=True)
     due_date = models.DateField(null=True, blank=False, verbose_name="Due date")
     topik2user = models.ManyToManyField(User, verbose_name="Person in charge",
                                         related_name="user2topik")
     topik2peserta = models.ManyToManyField(Peserta, verbose_name="Known By",
                                            related_name="peserta2topik")
-    status = models.CharField(max_length=8, choices=STATUS, default="OPEN")
-    expired = models.BooleanField(default=False)
+    status = models.CharField(max_length=8, choices=STATUS, default="OPEN", null=True)
+    expired = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return self.nama_topik
@@ -109,13 +109,13 @@ class Activity(models.Model):
     activity2topik = models.ForeignKey(Topik, on_delete=models.CASCADE, null=True, related_name="topik2activity")
     date_activity = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True,
                                      verbose_name="Date Activity", default=timezone.now)
-    keterangan = models.CharField(max_length=255, verbose_name="Activity/Action")
+    keterangan = models.CharField(max_length=255, verbose_name="Activity/Action", null=True)
     activity2user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="user2activity",
                                       verbose_name="PIC")
     due_date = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True,
                                 verbose_name="New Due Date (If Any)")
-    expired = models.BooleanField(default=False)
-    status = models.CharField(max_length=8, choices=STATUS, default="OPEN")
+    expired = models.BooleanField(default=False, null=True)
+    status = models.CharField(max_length=8, choices=STATUS, default="OPEN", null=True)
 
     def __str__(self):
         return self.keterangan[:50]
@@ -125,7 +125,7 @@ class Pic(models.Model):
     nama = models.CharField(max_length=50, verbose_name="Nama Peserta", null=True,
                             blank=True)
     email = models.EmailField(null=True, blank=True, verbose_name="Email address")
-    in_charge = models.BooleanField(default=False, verbose_name="In Charge")
+    in_charge = models.BooleanField(default=False, verbose_name="In Charge", null=True)
     pic2topik = models.ManyToManyField(Topik, verbose_name="Topik", related_name="topik2pic")
 
     def __str__(self):

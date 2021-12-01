@@ -16,13 +16,13 @@ class Profile(models.Model):
     birth_date = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
     photo = models.ImageField(null=True, default='images/User1.svg',
                               blank=True, upload_to="images/")
-    gender = models.CharField(max_length=1, choices=GENDER, verbose_name="Gender")
-    mobile_number = models.CharField(max_length=12, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
+    gender = models.CharField(max_length=1, choices=GENDER, verbose_name="Gender", null=True)
+    mobile_number = models.CharField(max_length=12, blank=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_updated = models.DateTimeField(auto_now=True, null=True)
     profile2divdept = models.ForeignKey(DivDept, on_delete=models.CASCADE, blank=True, null=True,
                                         verbose_name="Div/Dept")
-    bod = models.CharField(max_length=1, choices=BOD, verbose_name="Status BOD ?")
+    bod = models.CharField(max_length=1, choices=BOD, verbose_name="Status BOD ?", null=True)
 
     def __str__(self):
         return self.profile2user.username
