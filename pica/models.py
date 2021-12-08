@@ -69,7 +69,7 @@ class Meeting(models.Model):
     meeting2peserta = models.ManyToManyField(Peserta, related_name="peserta2meeting", verbose_name="Peserta meeting")
 
     def __str__(self):
-        return self.meeting2forum
+        return self.meeting2forum.nama_forum
 
 
 class Topik(models.Model):

@@ -3,6 +3,7 @@ from . import views
 
 app_name = "pica"
 urlpatterns = [
+    path('', views.home, name="home"),
     path('create_departemen/', views.CreateDepartemenView.as_view(), name="create_departemen"),
     path('update_departemen/<int:pk>/', views.UpdateDepartemenView.as_view(), name="update_departemen"),
     path('delete_departemen/<int:pk>/', views.DeleteDepartemenView.as_view(), name="delete_departemen"),

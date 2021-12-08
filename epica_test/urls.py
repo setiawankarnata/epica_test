@@ -5,8 +5,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('accounts.urls')),
-    path('pica/', include('pica.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('', include('pica.urls')),
     path('ckeditor', include('ckeditor_uploader.urls')),
 ]
 if settings.DEBUG:

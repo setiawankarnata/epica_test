@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="card card-body">
-                    <a class="btn btn-warning" href="{% url 'accounts:home' %}">&#8592; Back to HomePage</a>
+                    <a class="btn btn-warning" href="{% url 'pica:home' %}">&#8592; Back to HomePage</a>
                     <hr>
                     <h4>{{ request.user.first_name }} {{ request.user.last_name }}</h4>
                     {% if user.user2profile %}

@@ -1,6 +1,7 @@
 from datetime import datetime, date
 from io import BytesIO
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView, UpdateView, DeleteView
@@ -14,6 +15,18 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from xhtml2pdf import pisa
 from django.template.loader import get_template
+
+
+@login_required(login_url='accounts:login')
+def home(request):
+    topiks = Topik.objects.filter(topik2user=request.user)
+    hari_ini = date.today()
+    meetings = Meeting.objects.filter(meeting_date__gte=hari_ini)
+    context = {
+        'topiks': topiks,
+        'meetings': meetings,
+    }
+    return render(request, 'home.html', context)
 
 
 def meet_render_pdf(request, pk):

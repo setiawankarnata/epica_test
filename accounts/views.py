@@ -11,11 +11,6 @@ from .models import Profile
 from .forms import CreateProfileForm, SignUpForm, UpdateProfileForm, UpdateUserForm, LoginForm
 
 
-@login_required(login_url='accounts:login')
-def home(request):
-    return render(request, 'home.html', {})
-
-
 class PasswordResetPageView(PasswordResetView):
     template_name = 'registration/password_reset_form.html'
 

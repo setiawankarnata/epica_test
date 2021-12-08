@@ -23,7 +23,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input class="btn btn-primary" type="submit" value="Submit">
-                <a class="btn btn-danger" href="{% url 'accounts:home' %}" role="button">Cancel</a>
+                <a class="btn btn-danger" href="{% url 'pica:home' %}" role="button">Cancel</a>
                 <br>
             </form>
             <br>
@@ -50,10 +50,10 @@
                         <td>{{ meet.start_time | time:"g A" }}</td>
                         <td>{{ meet.end_time | time:"g A" }}</td>
                         <td>{{ meet.location }}</td>
-                        <td><a class="btn btn-sm btn-primary btn-sm"
-                               href="{% url 'pica:update_dashboard' meet.pk %}">Edit</a></td>
                         <td><a class="btn btn-sm btn-secondary btn-sm"
-                               href="{% url 'pica:meeting_dashboard' meet.pk 1 %}">Dashboard</a></td>
+                               href="{% url 'pica:update_dashboard' meet.pk %}">Edit</a></td>
+                        <td><a class="btn btn-sm btn-primary btn-sm"
+                               href="{% url 'pica:meeting_dashboard' meet.pk 1 %}">Input Dashboard</a></td>
                     </tr>
                 {% endfor %}
             </table>

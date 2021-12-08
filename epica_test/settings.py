@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres.search',
     'mathfilters',
 ]
+
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
@@ -144,4 +145,4 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'accounts:login'
-LOGIN_REDIRECT_URL = 'accounts:home'
+LOGIN_REDIRECT_URL = 'pica:home'

@@ -2,11 +2,65 @@
 {% load static %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div class="container col-lg-4 offset-lg-4 text-center">
-        <br>
-        <img src="{% static 'images/ePicaLogo.png' %}" alt="epica logo">
-        <br><br>
-        <h3>Welcome {{ user.first_name }} {{ user.last_name }} to ePica application</h3>
-        <br>
+    <div class="container">
+        <div class="col-lg-4 offset-lg-4 text-center">
+            <img src="{% static 'images/ePicaLogo.png' %}" alt="epica logo">
+            <br>
+        </div>
+        {% if user.username == 'admin' %}
+            <div class="py-5">
+                <div class="row">
+                    {% for meeting in meetings %}
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <div class="card-header row">
+                                    <h5>
+                                        Meeting {{ meeting.meeting2forum.nama_forum }} </h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        {{ meeting.meeting_date | date:"l, d F Y" }}
+                                    </h6>
+                                    <p class="card-text">Start Time : {{ meeting.start_time |time:"G:i A"}}</p>
+                                    <p class="card-text">End Time : {{ meeting.end_time |time:"G:i A"}}</p>
+                                    <p class="card-text">Notulen : {{ meeting.notulen }}</p>
+                                    <p class="card-text">Location : {{ meeting.location }}</p>
+                                    <a href="{% url 'pica:meeting_dashboard' meeting.pk 1 %}" class="card-link">Meeting Dashboard
+                                        </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="py-5">
+                <div class="row">
+                    {% for topik in topiks %}
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <div class="card-header row">
+                                    <h5>
+                                        Meeting {{ topik.topik2meeting.meeting2forum.nama_forum }} {{ topik.topik2meeting.meeting_date | date:"l, d F Y" }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        {{ topik.nama_topik|truncatechars:50 }}
+                                    </h6>
+                                    <p class="card-text">Problem:</p>
+                                    <p class="card-text">{{ topik.problem|safe }}</p>
+                                    <p class="card-text">Action/Information:</p>
+                                    <p class="card-text">{{ topik.action|safe }}</p>
+                                    <p class="card-text">Due date:</p>
+                                    <p class="card-text">{{ topik.due_date | date:"l, d F Y" }}</p>
+                                    <a href="{% url 'pica:create_activity' topik.pk %}" class="card-link">Input
+                                        Activity</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
